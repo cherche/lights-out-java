@@ -5,6 +5,7 @@ public class LightsOut {
   public int height;
   public boolean[][] map;
 
+  /*
   public String toString() {
     String string = "";
 
@@ -34,6 +35,7 @@ public class LightsOut {
 
     System.out.println("Congratulations! You win.");
   }
+  */
 
   public LightsOut(int width, int height) {
     this.width = width;
@@ -54,21 +56,22 @@ public class LightsOut {
     return true;
   }
 
-  public void toggle(int[] coords) {
-    int x = coords[0];
-    int y = coords[1];
+  public void toggle(int[] target) {
+    int x = target[0];
+    int y = target[1];
     map[x][y] = !map[x][y];
   }
 
-  public ArrayList<int[]> press(int[] coords) {
-    toggle(coords);
-    ArrayList<int[]> queue = new ArrayList<int[]>(getDirectAdjacents(coords));
+  public ArrayList<int[]> press(int[] target) {
+    ArrayList<int[]> queue = new ArrayList<int[]>(getDirectAdjacents(target));
 
     for (int i = 0; i < queue.size(); i++) {
-      int[] coords2 = queue.get(i);
-      toggle(coords2);
+      int[] coords = queue.get(i);
+      toggle(coords);
     }
 
+    toggle(target);
+    queue.add(target);
     return queue;
   }
 
